@@ -1,0 +1,7 @@
+[[tables]]
+name = "ga_test"
+columns = [
+    {name = "c1", type = "varchar", size = "255", null = false},
+    {name = "c2", type = "bigint", unsigned = true, null = false}
+]
+primary = ["c1"]
