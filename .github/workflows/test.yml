@@ -35,4 +35,4 @@ jobs:
         run: go run cmd/mig_for_ga/main.go
 
       - name: all go test
-        run: sh all_test.sh
+        run: bash all_test.sh
