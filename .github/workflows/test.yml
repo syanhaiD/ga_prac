@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: create database
         run: |
-          mysql -h localhost --port 3306 -uroot -e "CREATE DATABASE ga_test DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci"
+          mysql -h 127.0.0.1 --port 3306 -uroot -e "CREATE DATABASE ga_test DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci"
 
       - name: Checkout
         uses: actions/checkout@v2
