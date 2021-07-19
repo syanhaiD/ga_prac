@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          repository: 'main'
+          repository: 'ga_prac/main'
 
       - name: Set up Golang
         uses: actions/setup-go@v2
