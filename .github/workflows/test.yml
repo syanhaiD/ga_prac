@@ -19,6 +19,11 @@ jobs:
           MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
         options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
     steps:
+      - name: create database
+        run: |
+          mysql -h localhost --port 3306 -uroot -e "CREATE DATABASE ga_test DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci"
+
+      - name: Checkout
       - uses: actions/checkout@v2
 
       - name: Set up Golang
