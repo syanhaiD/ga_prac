@@ -30,4 +30,4 @@ jobs:
         run: go run cmd/mig_for_ga/main.go
 
       - name: all go test
-        run: ./all_test.sh
+        run: sh all_test.sh
