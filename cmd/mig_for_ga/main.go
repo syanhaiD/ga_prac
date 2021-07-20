@@ -27,3 +27,7 @@ func main() {
 
 	os.Exit(0)
 }
+
+func target() bool {
+	return true
+}
