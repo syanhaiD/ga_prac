@@ -1,0 +1,12 @@
+FROM asia.gcr.io/syanhaid-prac/ga_prac/ga_prac:gobase
+
+LABEL maintainer="https://github.com/syanhaid"
+
+WORKDIR /work
+
+COPY . .
+
+RUN set -x && \
+    echo "nameserver 8.8.8.8" > /etc/resolv.conf && \
+    cd cmd/ga_prac/ && \
+    /usr/local/go/bin/go build -o ../../main
