@@ -31,6 +31,9 @@ jobs:
         with:
           go-version: 1.16
 
+      - name: for trivy
+        run: go get -u golang.org/x/crypto
+
       - name: Migrate DB
         run: go run cmd/mig_for_ga/main.go
 
