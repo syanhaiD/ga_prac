@@ -11,4 +11,8 @@ RUN set -x && \
     ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2 && \
     wget https://dl.google.com/go/go1.16.6.linux-amd64.tar.gz && \
     tar -C /usr/local/ -xzf go1.16.6.linux-amd64.tar.gz && \
-    rm -f go1.16.6.linux-amd64.tar.gz
+    rm -f go1.16.6.linux-amd64.tar.gz && \
+    cd /usr/local/go/src/ && \
+    /usr/local/go/bin/go get -u golang.org/x/crypto && \
+    cd cmd && \
+    /usr/local/go/bin/go get -u golang.org/x/crypto
