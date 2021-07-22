@@ -1,0 +1,64 @@
+name: Gcs
+
+on:
+  push:
+    branches:
+      - gcs_prac
+
+jobs:
+  gcs_prac:
+    name: gcs_prac
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Golang
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16
+
+      - name: all go test
+        run: bash all_test.sh
+
+      - name: build Go binary
+        run: |
+          mkdir dist/
+          cd cmd/ga_prac/
+          go build -o ../../dist/ga_prac_${{ github.sha }}
+          cd ../../
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: './dist'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          severity: 'CRITICAL,HIGH'
+
+      - name: GCP Authenticate
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          version: '290.0.1'
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCR_JSON_SA_KEY }}
+          export_default_credentials: true
+
+      - id: upload-file
+        uses: google-github-actions/upload-cloud-storage@main
+        with:
+          path: ./dist/ga_prac_${{ github.sha }}
+          destination: ga_prac/dir1/ga_prac_${{ github.sha }}
+
+      - name: Notificate Slack Channel
+        uses: rtCamp/action-slack-notify@v2
+        if: always()
+        env:
+          SLACK_CHANNEL: test_unity_cb
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_MESSAGE: "github workflow result: ${{ job.status }}"
+          SLACK_TITLE: github workflow result
+          SLACK_USERNAME: github workflow watcher
