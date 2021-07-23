@@ -32,7 +32,7 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'fs'
-          scan-ref: './dist'
+          scan-ref: './dist/'
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
@@ -50,7 +50,7 @@ jobs:
         uses: google-github-actions/upload-cloud-storage@main
         with:
           path: ./dist/ga_prac_${{ github.sha }}
-          destination: ga_prac/dir1/ga_prac_${{ github.sha }}
+          destination: ga_prac/dir1/
 
       - name: Notificate Slack Channel
         uses: rtCamp/action-slack-notify@v2
